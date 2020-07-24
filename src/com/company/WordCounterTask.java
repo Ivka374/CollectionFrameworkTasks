@@ -8,7 +8,7 @@ public class WordCounterTask {
         Scanner scanner = new Scanner(System.in);
         String[] words = scanner.nextLine().toLowerCase().split(" ");
 
-        Map<String, Integer> wordCount = new HashMap<>();
+        Map<String, Integer> wordCount = new TreeMap<>(String.CASE_INSENSITIVE_ORDER);
         for (String word : words) {
             wordCount.merge(word, 1, Integer::sum);
         }
