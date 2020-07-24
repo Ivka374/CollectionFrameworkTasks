@@ -5,21 +5,28 @@ import java.util.*;
 
 public class KidnapperTask {
     public static void main(String[] args) {
-        List<String> availableWords = new LinkedList<>();
-        List<String> neededWords = new LinkedList<>();
-        boolean isPossible = false;
+        Scanner scan = new Scanner(System.in);
 
-        Scanner scanner = new Scanner(System.in);
-        String availableRow = scanner.nextLine();
-        String neededRow = scanner.nextLine();
-        String[] availableArray = availableRow.split(" ");
-        String[] neededArray = neededRow.split(" ");
-        availableWords = Arrays.asList(availableArray);
-        neededWords = Arrays.asList(neededArray);
+        String[] availableWords = scan.nextLine().split(" ");
+        String[] neededWords = scan.nextLine().split(" ");
 
-        for (String word : neededWords){
-            if (availableWords.contains(word)){
-                isPossible = true;
+        Map<String, Integer> map = new HashMap<>();
+        for (String word : availableWords) {
+            if (map.containsKey(word)) {
+                map.put(word, map.get(word) + 1);
+            } else {
+                map.put(word, 1);
+            }
+        }
+
+        boolean isPossible = true;
+
+        for (String word : neededWords) {
+            if (map.containsKey(word)) {
+                map.put(word, map.get(word) - 1);
+                if (map.get(word) == 0) {
+                    map.remove(word);
+                }
             } else {
                 isPossible = false;
                 break;
